@@ -1,0 +1,83 @@
+<div id="header" *ngIf="loginService.isLoggedIn">
+  <nav class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" style="background-color: #565FA7;">Stock_Market</a>
+
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3" style="background-color: #565FA7;">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Sign out</a>
+        </li>
+      </ul>
+  </nav>
+</div> 
+
+<div id="container">
+    <div id="sidebar" *ngIf="loginService.isLoggedIn">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">  
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column" *ngIf="loginService.role==='ROLE_ADMIN'">  
+            <li class="nav-item" *ngIf="loginService.role==='ROLE_ADMIN'">
+              <a class="nav-link" routerLink="/updateprofile" routerLinkActive="active">
+                  Update profile
+              </a>
+            </li>          
+            <li class="nav-item">                
+              <a class="nav-link" routerLink="/importexcel" routerLinkActive="active">
+                Import Data
+              </a>
+            </li>
+            <li class="nav-item" *ngIf="loginService.role==='ROLE_ADMIN'">
+                <a class="nav-link" routerLink="/managecompanies" routerLinkActive="active">
+                  Manage Company
+                </a>
+              </li>
+              <li class="nav-item" *ngIf="loginService.role==='ROLE_ADMIN'">
+                <a class="nav-link" routerLink="/managestockexchange" routerLinkActive="active">
+                  Mange Exchange
+                </a>
+              </li> 
+              <li class="nav-item" *ngIf="loginService.role==='ROLE_ADMIN'">                
+                <a class="nav-link" routerLink="/manageipo" routerLinkActive="active">
+                  Update IPO details
+                </a>
+              </li>            
+              <li class="nav-item" *ngIf="loginService.role==='ROLE_USER'">                
+                <a class="nav-link" routerLink="/manageipo" routerLinkActive="active">
+                  IPOList
+                </a>
+              </li>
+              <li class="nav-item" *ngIf="loginService.role==='ROLE_USER'">
+                  <a class="nav-link" routerLink="/comparecompany" routerLinkActive="active">
+                      Compare Company
+                  </a>
+                </li>
+                <li class="nav-item" *ngIf="loginService.role==='ROLE_USER'">
+                  <a class="nav-link" routerLink="/updateprofile" routerLinkActive="active">
+                      Update profile
+                  </a>
+                </li>        
+          </ul> 
+        </div>
+        </nav>
+    </div>
+    <div id="main">
+      <router-outlet></router-outlet>
+    </div>
+</div>
+
+<!-- <main id="main">
+  <router-outlet></router-outlet>
+</main>  -->
+
+<!-- <div id="main">
+  <router-outlet></router-outlet>
+</div> -->
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,90 @@
+<main role="main" class="col-md-6 offset-sm-4 col-12" style="margin-top: 2px;">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="text-center" style="color: #565FA7; margin-bottom: 5px;" ><strong>COMPANY COMPARISON</strong></h1>
+  </div>
+  <form [formGroup]="compareForm" (ngSubmit)="generateChart()">
+  <div class="card">
+    <div class="card-header" >Time Period</div>
+    <div class="card-body">
+    <div class="form-group row">
+      <label for="periodicity" class="col-form-label col-3">Specific time range:</label>
+      <div class="col-sm-9">
+        <select id="periodicity"  class="form-control" formControlName="periodicity">
+          <option value="0">Week</option>
+          <option value="1">Month</option>
+          <option value="2">Quarter</option>
+          <option value="3">Year</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="fromPeriod" class="col-sm-3 col-form-label">From Period:</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd"
+                  name="fromdate" ngbDatepicker #fromdate="ngbDatepicker" formControlName="fromdate">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="fromdate.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="toPeriod" class="col-sm-3 col-form-label">To Period:</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd"
+                  name="todate" ngbDatepicker #todate="ngbDatepicker" formControlName="todate">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="todate.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" style="color: #565FA7;margin-top: 20px;"><strong>Company</strong></div>
+    <div class="card-body">
+      <div *ngFor="let item of companys.controls;let companyIndex = index" formArrayName="companys">
+        <div [formGroupName]="companyIndex.toString()">
+          <div class="form-group row">
+            <label for="type" class="col-sm-3 col-form-label">Select Company/Sector{{companyIndex+1}}:</label>
+            <div class="col-sm-9">
+              <select id="type{{item}}" class="form-control" name="type{{item}}" formControlName="type">
+                <option value="0">Company</option>
+                <option value="1">Sector</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="stockexchange" class="col-sm-3 col-form-label">Select Stock Exchanges{{companyIndex+1}}:</label>
+            <div class="col-sm-9">
+              <select id="stockexchange{{item}}" class="form-control" name="stockexchange{{item}}" formControlName="stockexchange">
+                <option selected>BSE</option>
+                <option>NSE</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="companyname" class="col-sm-3 col-form-label">Company Name{{companyIndex+1}}:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="companyname{{item}}" name="companyname{{item}}" formControlName="companyname">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+      <button type="button"  *ngIf="companys.length>1" class="btn btn-sm btn-outline-secondary mr-2" (click)="delCompany()">Remove</button>
+      <button type="button"  class="btn btn-sm btn-outline-secondary" (click)="addCompany()">Add</button>
+    </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end pt-3 pb-3">
+    <button class="btn btn-primary col-6" type="submit" style="background-color: #565FA7;color: white; margin-top: 30px; font-size:20px;">Generate Chart</button>
+  </div>
+  </form>
+  <br>
+  <div *ngIf="showChart" echarts [options]="options" class="demo-chart" (chartInit)="onChartInit($event)"></div>
+</main>
+

@@ -1,5 +1,5 @@
 FROM node as node-builder
-WORKDIR /fullstackfe
+WORKDIR /StockMarket
 
 #build the angular app
 COPY . .

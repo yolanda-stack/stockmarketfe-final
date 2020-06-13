@@ -8,7 +8,7 @@ RUN npm run build
 
 FROM nginx
 # copy from dist to nginx root dir，
-COPY --from=node-builder /fullstackfe/StockMarket/dist/StockMarket build /fullstackfe /usr/share/nginx/html
+COPY --from=node-builder /StockMarket/dist/StockMarket /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx-angular.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80

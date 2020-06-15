@@ -6,10 +6,10 @@ pipeline {
 
     environment {
         GIT_PROJECT_ADDR="https://github.com/yolanda-stack/stockmarketfe-final.git" //项目的git地址
-        JENKINS_WORKSPACE="/var/jenkins_home/workspace"    //jenkins存放文件的地址
-        PROJECT_NAME="fullstackfe"  			        // 项目名
-        IMAGE_NAME="fullstackfe"                    // 镜像名一般和项目名相同
-        IMAGE_ADDR="yolanda/${IMAGE_NAME}"    // 镜像的位置
+        JENKINS_WORKSPACE="/var/jenkins_home/workspace"                             //jenkins存放文件的地址
+        PROJECT_NAME="fullstackfe"  			                                          // 项目名
+        IMAGE_NAME="fullstackfe"                                                    // 镜像名一般和项目名相同
+        IMAGE_ADDR="yolanda/${IMAGE_NAME}"                                          // 镜像的位置
         VERSION_ID="1.0.0"
         CREDENTIAL_ID="Dockerhub_weilei"
     }
@@ -49,7 +49,6 @@ pipeline {
 	       script {	    
                 echo 'pull image and docker run'
                 withEnv(['JENKINS_NODE_COOKIE=dontKillMe']) {
-		   //sh 'sudo docker pull ${IMAGE_ADDR}:${VERSION_ID}'
 		   //删除所有相关容器
 		    def OLD_CONTAINER_ID=sh(returnStdout:true,script:"sudo docker ps -aq --filter name=${IMAGE_NAME}")
 		    echo "OLD_CONTAINER_ID:${OLD_CONTAINER_ID}"			
@@ -57,11 +56,7 @@ pipeline {
 		        echo 'delete old container'	
                         sh 'sudo docker rm -f $(docker ps -aq --filter name="${IMAGE_NAME}")'
 		    }
-		   //删除所有相关容器
-                   //sh 'docker rm -f $(sudo docker ps -aq --filter name="${IMAGE_NAME}")'
-                   //删除所有相关镜像
-                   //sh 'docker rmi -f $(docker image ls -q ${IMAGE_NAME})'
-                   //启动镜像生成容器	
+       //启动镜像生成容器	
 		   sh 'sudo docker run --name "${IMAGE_NAME}" --restart=always -p 80:80 --network stockmarket-network -d ${IMAGE_NAME}:${VERSION_ID}'
 					
                 }
